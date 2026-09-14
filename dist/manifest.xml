@@ -1,107 +1,212 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
+
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="MailApp">
+
   <Id>09fa4124-3eaf-4107-be2a-cadf092d34d6</Id>
-  <Version>1.0.0.0</Version>
+
+  <Version>1.0.0.1</Version>
+
   <ProviderName>Contoso</ProviderName>
+
   <DefaultLocale>en-US</DefaultLocale>
+
   <DisplayName DefaultValue="MyOutlookAddIn"/>
-  <Description DefaultValue="A template to get started."/>
-  <IconUrl DefaultValue="https://www.contoso.com/assets/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://www.contoso.com/assets/icon-128.png"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
+
+  <Description DefaultValue="Process emails and send them to Power Automate."/>
+
+  <IconUrl
+    DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-64.png"/>
+
+  <HighResolutionIconUrl
+    DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-128.png"/>
+
+  <SupportUrl
+    DefaultValue="https://my-outlook-addin-d5p4.vercel.app"/>
+
   <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
+    <AppDomain>
+      https://my-outlook-addin-d5p4.vercel.app
+    </AppDomain>
   </AppDomains>
+
   <Hosts>
     <Host Name="Mailbox"/>
   </Hosts>
+
   <Requirements>
     <Sets>
       <Set Name="Mailbox" MinVersion="1.1"/>
     </Sets>
   </Requirements>
+
   <FormSettings>
+
     <Form xsi:type="ItemRead">
+
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://www.contoso.com/taskpane.html"/>
+
+        <SourceLocation
+          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/taskpane.html"/>
+
         <RequestedHeight>250</RequestedHeight>
+
       </DesktopSettings>
+
     </Form>
+
   </FormSettings>
+
   <Permissions>ReadWriteItem</Permissions>
+
   <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+
+    <Rule
+      xsi:type="ItemIs"
+      ItemType="Message"
+      FormType="Read"/>
+
   </Rule>
+
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
-  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+
+  <VersionOverrides
+    xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
+    xsi:type="VersionOverridesV1_0">
+
     <Requirements>
+
       <bt:Sets DefaultMinVersion="1.3">
+
         <bt:Set Name="Mailbox"/>
+
       </bt:Sets>
+
     </Requirements>
+
     <Hosts>
+
       <Host xsi:type="MailHost">
+
         <DesktopFormFactor>
-          <FunctionFile resid="Commands.Url"/>
+
+          <!-- Ribbon command -->
           <ExtensionPoint xsi:type="MessageReadCommandSurface">
+
             <OfficeTab id="TabDefault">
-              <Group id="msgReadGroup">
+
+              <!-- Only one group -->
+              <Group id="MyOutlookAddInGroup">
+
                 <Label resid="GroupLabel"/>
-                <Control xsi:type="Button" id="msgReadOpenPaneButton">
-                  <Label resid="TaskpaneButton.Label"/>
+
+                <!-- Only one button -->
+                <Control
+                  xsi:type="Button"
+                  id="ProcessEmailButton">
+
+                  <Label resid="ProcessEmail.Label"/>
+
                   <Supertip>
-                    <Title resid="TaskpaneButton.Label"/>
-                    <Description resid="TaskpaneButton.Tooltip"/>
+
+                    <Title resid="ProcessEmail.Label"/>
+
+                    <Description resid="ProcessEmail.Tooltip"/>
+
                   </Supertip>
+
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
+
+                    <bt:Image
+                      size="16"
+                      resid="Icon.16x16"/>
+
+                    <bt:Image
+                      size="32"
+                      resid="Icon.32x32"/>
+
+                    <bt:Image
+                      size="80"
+                      resid="Icon.80x80"/>
+
                   </Icon>
+
                   <Action xsi:type="ShowTaskpane">
+
                     <SourceLocation resid="Taskpane.Url"/>
+
                   </Action>
+
                 </Control>
-                <Control xsi:type="Button" id="ActionButton">
-                  <Label resid="ActionButton.Label"/>
-                  <Supertip>
-                    <Title resid="ActionButton.Label"/>
-                    <Description resid="ActionButton.Tooltip"/>
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>action</FunctionName>
-                  </Action>
-                </Control>
+
               </Group>
+
             </OfficeTab>
+
           </ExtensionPoint>
+
         </DesktopFormFactor>
+
       </Host>
+
     </Hosts>
+
     <Resources>
+
+      <!-- Icons -->
       <bt:Images>
-        <bt:Image id="Icon.16x16" DefaultValue="https://www.contoso.com/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://www.contoso.com/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://www.contoso.com/assets/icon-80.png"/>
+
+        <bt:Image
+          id="Icon.16x16"
+          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-16.png"/>
+
+        <bt:Image
+          id="Icon.32x32"
+          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-32.png"/>
+
+        <bt:Image
+          id="Icon.80x80"
+          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-80.png"/>
+
       </bt:Images>
+
+      <!-- URLs -->
       <bt:Urls>
-        <bt:Url id="Commands.Url" DefaultValue="https://www.contoso.com/commands.html"/>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://www.contoso.com/taskpane.html"/>
+
+        <bt:Url
+          id="Taskpane.Url"
+          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/taskpane.html"/>
+
       </bt:Urls>
+
+      <!-- Short strings -->
       <bt:ShortStrings>
-        <bt:String id="GroupLabel" DefaultValue="Contoso Add-in"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Task Pane"/>
-        <bt:String id="ActionButton.Label" DefaultValue="Perform an action"/>
+
+        <bt:String
+          id="GroupLabel"
+          DefaultValue="Email Actions"/>
+
+        <bt:String
+          id="ProcessEmail.Label"
+          DefaultValue="Process Email"/>
+
       </bt:ShortStrings>
+
+      <!-- Long strings -->
       <bt:LongStrings>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
-        <bt:String id="ActionButton.Tooltip" DefaultValue="Perform an action when clicked."/>
+
+        <bt:String
+          id="ProcessEmail.Tooltip"
+          DefaultValue="Open the email processing task pane."/>
+
       </bt:LongStrings>
+
     </Resources>
+
   </VersionOverrides>
+
 </OfficeApp>

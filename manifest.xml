@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
   xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
@@ -7,7 +9,7 @@
 
   <Id>09fa4124-3eaf-4107-be2a-cadf092d34d6</Id>
 
-  <Version>1.0.0.0</Version>
+  <Version>1.0.0.1</Version>
 
   <ProviderName>Contoso</ProviderName>
 
@@ -15,16 +17,21 @@
 
   <DisplayName DefaultValue="MyOutlookAddIn"/>
 
-  <Description DefaultValue="A template to get started."/>
+  <Description DefaultValue="Process emails and send them to Power Automate."/>
 
-  <IconUrl DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-64.png"/>
+  <IconUrl
+    DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-64.png"/>
 
-  <HighResolutionIconUrl DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-128.png"/>
+  <HighResolutionIconUrl
+    DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/icon-128.png"/>
 
-  <SupportUrl DefaultValue="https://my-outlook-addin-d5p4.vercel.app"/>
+  <SupportUrl
+    DefaultValue="https://my-outlook-addin-d5p4.vercel.app"/>
 
   <AppDomains>
-    <AppDomain>https://my-outlook-addin-d5p4.vercel.app</AppDomain>
+    <AppDomain>
+      https://my-outlook-addin-d5p4.vercel.app
+    </AppDomain>
   </AppDomains>
 
   <Hosts>
@@ -38,18 +45,31 @@
   </Requirements>
 
   <FormSettings>
+
     <Form xsi:type="ItemRead">
+
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://my-outlook-addin-d5p4.vercel.app/taskpane.html"/>
+
+        <SourceLocation
+          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/taskpane.html"/>
+
         <RequestedHeight>250</RequestedHeight>
+
       </DesktopSettings>
+
     </Form>
+
   </FormSettings>
 
   <Permissions>ReadWriteItem</Permissions>
 
   <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+
+    <Rule
+      xsi:type="ItemIs"
+      ItemType="Message"
+      FormType="Read"/>
+
   </Rule>
 
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
@@ -59,64 +79,66 @@
     xsi:type="VersionOverridesV1_0">
 
     <Requirements>
+
       <bt:Sets DefaultMinVersion="1.3">
+
         <bt:Set Name="Mailbox"/>
+
       </bt:Sets>
+
     </Requirements>
 
     <Hosts>
+
       <Host xsi:type="MailHost">
 
         <DesktopFormFactor>
 
-          <FunctionFile resid="Commands.Url"/>
-
+          <!-- Ribbon command -->
           <ExtensionPoint xsi:type="MessageReadCommandSurface">
 
             <OfficeTab id="TabDefault">
 
-              <Group id="msgReadGroup">
+              <!-- Only one group -->
+              <Group id="MyOutlookAddInGroup">
 
                 <Label resid="GroupLabel"/>
 
-                <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                <!-- Only one button -->
+                <Control
+                  xsi:type="Button"
+                  id="ProcessEmailButton">
 
-                  <Label resid="TaskpaneButton.Label"/>
+                  <Label resid="ProcessEmail.Label"/>
 
                   <Supertip>
-                    <Title resid="TaskpaneButton.Label"/>
-                    <Description resid="TaskpaneButton.Tooltip"/>
+
+                    <Title resid="ProcessEmail.Label"/>
+
+                    <Description resid="ProcessEmail.Tooltip"/>
+
                   </Supertip>
 
                   <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
+
+                    <bt:Image
+                      size="16"
+                      resid="Icon.16x16"/>
+
+                    <bt:Image
+                      size="32"
+                      resid="Icon.32x32"/>
+
+                    <bt:Image
+                      size="80"
+                      resid="Icon.80x80"/>
+
                   </Icon>
 
                   <Action xsi:type="ShowTaskpane">
+
                     <SourceLocation resid="Taskpane.Url"/>
-                  </Action>
 
-                </Control>
-
-                <Control xsi:type="Button" id="ActionButton">
-
-                  <Label resid="ActionButton.Label"/>
-
-                  <Supertip>
-                    <Title resid="ActionButton.Label"/>
-                    <Description resid="ActionButton.Tooltip"/>
-                  </Supertip>
-
-                  <Icon>
-                    <bt:Image size="16" resid="Icon.16x16"/>
-                    <bt:Image size="32" resid="Icon.32x32"/>
-                    <bt:Image size="80" resid="Icon.80x80"/>
-                  </Icon>
-
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>action</FunctionName>
                   </Action>
 
                 </Control>
@@ -130,10 +152,12 @@
         </DesktopFormFactor>
 
       </Host>
+
     </Hosts>
 
     <Resources>
 
+      <!-- Icons -->
       <bt:Images>
 
         <bt:Image
@@ -150,11 +174,8 @@
 
       </bt:Images>
 
+      <!-- URLs -->
       <bt:Urls>
-
-        <bt:Url
-          id="Commands.Url"
-          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/commands.html"/>
 
         <bt:Url
           id="Taskpane.Url"
@@ -162,31 +183,25 @@
 
       </bt:Urls>
 
+      <!-- Short strings -->
       <bt:ShortStrings>
 
         <bt:String
           id="GroupLabel"
-          DefaultValue="Contoso Add-in"/>
+          DefaultValue="Email Actions"/>
 
         <bt:String
-          id="TaskpaneButton.Label"
-          DefaultValue="Show Task Pane"/>
-
-        <bt:String
-          id="ActionButton.Label"
-          DefaultValue="Perform an action"/>
+          id="ProcessEmail.Label"
+          DefaultValue="Process Email"/>
 
       </bt:ShortStrings>
 
+      <!-- Long strings -->
       <bt:LongStrings>
 
         <bt:String
-          id="TaskpaneButton.Tooltip"
-          DefaultValue="Opens a pane displaying all available properties."/>
-
-        <bt:String
-          id="ActionButton.Tooltip"
-          DefaultValue="Perform an action when clicked."/>
+          id="ProcessEmail.Tooltip"
+          DefaultValue="Open the email processing task pane."/>
 
       </bt:LongStrings>
 
