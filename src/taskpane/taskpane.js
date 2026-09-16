@@ -1,4 +1,4 @@
-/*
+/* 
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT license.
  *
@@ -6,6 +6,7 @@
  */
 
 /* global document, Office */
+
 
 Office.onReady(function (info) {
 
@@ -15,6 +16,97 @@ Office.onReady(function (info) {
 
     if (button) {
       button.onclick = run;
+    }
+
+    // ==========================================
+    // CATEGORY FIELD VISIBILITY
+    // ==========================================
+
+    var categoryElement =
+      document.getElementById("category");
+
+    var dueDateContainer =
+      document.getElementById("dueDateContainer");
+
+    var waitingFields =
+      document.getElementById("waitingFields");
+
+    var respondFromElement =
+      document.getElementById("respondFrom");
+
+    var daysElement =
+      document.getElementById("days");
+
+
+    if (
+      categoryElement &&
+      dueDateContainer &&
+      waitingFields
+    ) {
+
+      function updateCategoryFields() {
+
+        var selectedCategory =
+          categoryElement.value;
+
+
+        // ==========================================
+        // DUE DATE VISIBILITY
+        // ==========================================
+
+        if (
+          selectedCategory === "Tim — Please Read" ||
+          selectedCategory === "Waiting on Others"
+        ) {
+
+          dueDateContainer.style.display = "none";
+
+        } else {
+
+          dueDateContainer.style.display = "block";
+
+        }
+
+
+        // ==========================================
+        // WAITING ON OTHERS FIELDS
+        // ==========================================
+
+        if (
+          selectedCategory === "Waiting on Others"
+        ) {
+
+          waitingFields.style.display = "block";
+
+        } else {
+
+          waitingFields.style.display = "none";
+
+          if (respondFromElement) {
+            respondFromElement.value = "";
+          }
+
+          if (daysElement) {
+            daysElement.value = "";
+          }
+
+        }
+
+      }
+
+
+      // Run when category changes
+
+      categoryElement.addEventListener(
+        "change",
+        updateCategoryFields
+      );
+
+
+      // Run once when task pane loads
+
+      updateCategoryFields();
+
     }
 
   }
@@ -109,6 +201,14 @@ export async function run() {
       document.getElementById("instructions");
 
 
+    var respondFromElement =
+      document.getElementById("respondFrom");
+
+
+    var daysElement =
+      document.getElementById("days");
+
+
     // ==========================================
     // CHECK FORM ELEMENTS
     // ==========================================
@@ -117,7 +217,9 @@ export async function run() {
       !categoryElement ||
       !priorityElement ||
       !dueDateElement ||
-      !instructionsElement
+      !instructionsElement ||
+      !respondFromElement ||
+      !daysElement
     ) {
 
       throw new Error(
@@ -147,6 +249,14 @@ export async function run() {
       instructionsElement.value.trim();
 
 
+    var respondFrom =
+      respondFromElement.value.trim();
+
+
+    var days =
+      daysElement.value;
+
+
     // ==========================================
     // VALIDATION
     // ==========================================
@@ -171,7 +281,23 @@ export async function run() {
     }
 
 
-    if (!dueDate) {
+    // ==========================================
+    // DUE DATE VALIDATION
+    // ==========================================
+    // Due Date is required only for:
+    // Tim's To-Dos
+    // Rachel's To-Dos
+    //
+    // It is NOT required for:
+    // Tim — Please Read
+    // Waiting on Others
+    // ==========================================
+
+    if (
+      category !== "Tim — Please Read" &&
+      category !== "Waiting on Others" &&
+      !dueDate
+    ) {
 
       statusElement.textContent =
         "Please select a due date.";
@@ -180,6 +306,50 @@ export async function run() {
 
     }
 
+
+    // ==========================================
+    // WAITING ON OTHERS VALIDATION
+    // ==========================================
+
+    if (
+      category === "Waiting on Others"
+    ) {
+
+      if (!respondFrom) {
+
+        statusElement.textContent =
+          "Please enter Respond From.";
+
+        return;
+
+      }
+
+
+      if (!days) {
+
+        statusElement.textContent =
+          "Please enter number of days.";
+
+        return;
+
+      }
+
+
+      if (Number(days) <= 0) {
+
+        statusElement.textContent =
+          "Days must be greater than 0.";
+
+        return;
+
+      }
+
+    }
+
+
+    // ==========================================
+    // INSTRUCTIONS VALIDATION
+    // ==========================================
 
     if (!instructions) {
 
@@ -200,20 +370,36 @@ export async function run() {
       category
     );
 
+
     console.log(
       "Priority:",
       priority
     );
+
 
     console.log(
       "Due Date:",
       dueDate
     );
 
+
     console.log(
       "Instructions:",
       instructions
     );
+
+
+    console.log(
+      "Respond From:",
+      respondFrom
+    );
+
+
+    console.log(
+      "Days:",
+      days
+    );
+
 
     console.log(
       "Message ID:",
@@ -349,7 +535,18 @@ export async function run() {
                     dueDate,
 
                   instructions:
-                    instructions
+                    instructions,
+
+
+                  // ==================================
+                  // WAITING ON OTHERS
+                  // ==================================
+
+                  respondFrom:
+                    respondFrom,
+
+                  days:
+                    days
 
                 })
 
@@ -446,7 +643,13 @@ export async function run() {
                 dueDate,
 
               instructions:
-                instructions
+                instructions,
+
+              respondFrom:
+                respondFrom,
+
+              days:
+                days
 
             }
           );
@@ -467,6 +670,31 @@ export async function run() {
 
           instructionsElement.value =
             "";
+
+          respondFromElement.value =
+            "";
+
+          daysElement.value =
+            "";
+
+
+          // Reset visibility after clearing
+
+          var dueDateContainer =
+            document.getElementById("dueDateContainer");
+
+          var waitingFields =
+            document.getElementById("waitingFields");
+
+          if (dueDateContainer) {
+            dueDateContainer.style.display =
+              "block";
+          }
+
+          if (waitingFields) {
+            waitingFields.style.display =
+              "none";
+          }
 
 
         } catch (error) {
