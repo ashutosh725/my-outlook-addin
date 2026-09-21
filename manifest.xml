@@ -9,7 +9,7 @@
 
   <Id>09fa4124-3eaf-4107-be2a-cadf092d34d6</Id>
 
-  <Version>1.0.0.9</Version>
+  <Version>1.0.0.11</Version>
 
   <ProviderName>Contoso</ProviderName>
 
@@ -20,17 +20,17 @@
   <Description DefaultValue="Process emails and send them to Power Automate."/>
 
   <IconUrl
-    DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/EmailIcon.png"/>
+    DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
 
   <HighResolutionIconUrl
-    DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/EmailIcon.png"/>
+    DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
 
   <SupportUrl
-    DefaultValue="https://my-outlook-addin-d5p4.vercel.app"/>
+    DefaultValue="https://my-outlook-addin-snowy.vercel.app"/>
 
   <AppDomains>
     <AppDomain>
-      https://my-outlook-addin-d5p4.vercel.app
+      https://my-outlook-addin-snowy.vercel.app
     </AppDomain>
   </AppDomains>
 
@@ -51,7 +51,7 @@
       <DesktopSettings>
 
         <SourceLocation
-          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/taskpane.html"/>
+          DefaultValue="https://my-outlook-addin-snowy.vercel.app/taskpane.html"/>
 
         <RequestedHeight>250</RequestedHeight>
 
@@ -162,15 +162,15 @@
 
         <bt:Image
           id="Icon.16x16"
-          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/EmailIcon.png"/>
+          DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
 
         <bt:Image
           id="Icon.32x32"
-          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/EmailIcon.png"/>
+          DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
 
         <bt:Image
           id="Icon.80x80"
-          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/assets/EmailIcon.png"/>
+          DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
 
       </bt:Images>
 
@@ -179,7 +179,7 @@
 
         <bt:Url
           id="Taskpane.Url"
-          DefaultValue="https://my-outlook-addin-d5p4.vercel.app/taskpane.html"/>
+          DefaultValue="https://my-outlook-addin-snowy.vercel.app/taskpane.html"/>
 
       </bt:Urls>
 
