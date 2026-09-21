@@ -15,7 +15,7 @@
 
   <DefaultLocale>en-US</DefaultLocale>
 
-  <DisplayName DefaultValue="MyOutlookAddIn"/>
+  <DisplayName DefaultValue="Process Emails"/>
 
   <Description DefaultValue="Process emails and send them to Power Automate."/>
 

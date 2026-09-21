@@ -547,7 +547,7 @@ export async function run() {
            */
 
           var powerAutomateUrl =
-            "POWER_AUTOMATE_URL_HERE";
+            "https://defaulte1c709c847fe4dc0a35429338962b7.81.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/22/workflows/57d3ef023e9a41eba012f8b6f737002f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=QqiZz3uwnxRMLhHqoZhdtbB6FgSjhFOl-PP0fp7k1KQ";
 
 
           // ==================================================
