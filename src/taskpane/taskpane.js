@@ -5,6 +5,7 @@
  * - Category based field visibility
  * - Form validation
  * - Outlook email subject/body/message ID
+ * - Outlook Conversation ID
  * - Sending data to Power Automate
  */
 
@@ -26,7 +27,8 @@ Office.onReady(function (info) {
   // SEND BUTTON
   // ========================================================
 
-  var button = document.getElementById("sendToFlow");
+  var button =
+    document.getElementById("sendToFlow");
 
   if (button) {
     button.onclick = run;
@@ -88,11 +90,13 @@ Office.onReady(function (info) {
         selectedCategory === "Waiting on Others"
       ) {
 
-        dueDateContainer.style.display = "none";
+        dueDateContainer.style.display =
+          "none";
 
       } else {
 
-        dueDateContainer.style.display = "block";
+        dueDateContainer.style.display =
+          "block";
       }
 
 
@@ -106,21 +110,24 @@ Office.onReady(function (info) {
        * - Days
        *
        * Only for:
-       * Waiting on Others
+       * - Waiting on Others
        */
 
       if (
         selectedCategory === "Waiting on Others"
       ) {
 
-        waitingFields.style.display = "block";
+        waitingFields.style.display =
+          "block";
 
       } else {
 
-        waitingFields.style.display = "none";
+        waitingFields.style.display =
+          "none";
 
 
         // Clear fields when category changes
+
         if (respondFromElement) {
           respondFromElement.value = "";
         }
@@ -208,6 +215,20 @@ export async function run() {
     console.log(
       "Outlook Message ID:",
       messageId
+    );
+
+
+    // ======================================================
+    // GET OUTLOOK CONVERSATION ID
+    // ======================================================
+
+    var conversationId =
+      item.conversationId || "";
+
+
+    console.log(
+      "Outlook Conversation ID:",
+      conversationId
     );
 
 
@@ -348,6 +369,23 @@ export async function run() {
     ) {
 
       // ----------------------------------------------------
+      // Conversation ID required
+      // ----------------------------------------------------
+
+      if (!conversationId) {
+
+        statusElement.textContent =
+          "Unable to get email conversation ID.";
+
+        console.error(
+          "Conversation ID is empty."
+        );
+
+        return;
+      }
+
+
+      // ----------------------------------------------------
       // Respond From required
       // ----------------------------------------------------
 
@@ -407,7 +445,11 @@ export async function run() {
       // Days must be a valid number
       // ----------------------------------------------------
 
-      if (!Number.isFinite(Number(days))) {
+      if (
+        !Number.isFinite(
+          Number(days)
+        )
+      ) {
 
         statusElement.textContent =
           "Please enter a valid number of days.";
@@ -467,6 +509,11 @@ export async function run() {
     console.log(
       "Message ID:",
       messageId
+    );
+
+    console.log(
+      "Conversation ID:",
+      conversationId
     );
 
 
@@ -539,6 +586,7 @@ export async function run() {
 
           /*
            * IMPORTANT:
+           *
            * Replace this value with your current
            * Power Automate HTTP trigger URL.
            *
@@ -589,6 +637,14 @@ export async function run() {
 
                   messageId:
                     messageId,
+
+
+                  // ========================================
+                  // OUTLOOK CONVERSATION ID
+                  // ========================================
+
+                  conversationId:
+                    conversationId,
 
 
                   // ========================================
@@ -702,6 +758,9 @@ export async function run() {
 
               messageId:
                 messageId,
+
+              conversationId:
+                conversationId,
 
               category:
                 category,
