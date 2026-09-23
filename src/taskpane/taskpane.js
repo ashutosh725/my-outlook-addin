@@ -3,13 +3,14 @@
  *
  * Handles:
  * - Category based field visibility
- * - Form validation
+ * - Conditional form validation
  * - Outlook email subject/body/message ID
  * - Outlook Conversation ID
  * - Sending data to Power Automate
+ * - Success / Error status styling
  */
 
-/* global document, Office */
+ /* global document, Office */
 
 
 // ==========================================================
@@ -53,6 +54,9 @@ Office.onReady(function (info) {
 
   var daysElement =
     document.getElementById("days");
+
+  var instructionsRequiredStar =
+    document.getElementById("instructionsRequiredStar");
 
 
   // ========================================================
@@ -136,6 +140,36 @@ Office.onReady(function (info) {
           daysElement.value = "";
         }
       }
+
+
+      // ====================================================
+      // ADDITIONAL INSTRUCTIONS STAR
+      // ====================================================
+
+      /*
+       * Additional Instructions required only for:
+       *
+       * - Tim's To-Dos
+       * - Rachel's To-Dos
+       *
+       * Optional for:
+       *
+       * - Tim — Please Read
+       * - Waiting on Others
+       */
+
+      var isTaskCategory =
+        selectedCategory === "Tim's To-Dos" ||
+        selectedCategory === "Rachel's To-Dos";
+
+
+      if (instructionsRequiredStar) {
+
+        instructionsRequiredStar.style.display =
+          isTaskCategory
+            ? "inline"
+            : "none";
+      }
     }
 
 
@@ -156,6 +190,106 @@ Office.onReady(function (info) {
     updateCategoryFields();
   }
 });
+
+
+// ==========================================================
+// STATUS HELPERS
+// ==========================================================
+
+function showSuccess(message) {
+
+  var statusElement =
+    document.getElementById("status");
+
+  if (!statusElement) {
+    return;
+  }
+
+  statusElement.textContent =
+    message;
+
+  statusElement.style.display =
+    "block";
+
+  statusElement.style.color =
+    "#107c10";
+
+  statusElement.style.backgroundColor =
+    "#e8f5e9";
+
+  statusElement.style.border =
+    "1px solid #a5d6a7";
+
+  statusElement.style.padding =
+    "10px";
+
+  statusElement.style.borderRadius =
+    "4px";
+}
+
+
+function showError(message) {
+
+  var statusElement =
+    document.getElementById("status");
+
+  if (!statusElement) {
+    return;
+  }
+
+  statusElement.textContent =
+    message;
+
+  statusElement.style.display =
+    "block";
+
+  statusElement.style.color =
+    "#d13438";
+
+  statusElement.style.backgroundColor =
+    "#fde7e9";
+
+  statusElement.style.border =
+    "1px solid #f1aeb5";
+
+  statusElement.style.padding =
+    "10px";
+
+  statusElement.style.borderRadius =
+    "4px";
+}
+
+
+function showInfo(message) {
+
+  var statusElement =
+    document.getElementById("status");
+
+  if (!statusElement) {
+    return;
+  }
+
+  statusElement.textContent =
+    message;
+
+  statusElement.style.display =
+    "block";
+
+  statusElement.style.color =
+    "#333333";
+
+  statusElement.style.backgroundColor =
+    "#f3f3f3";
+
+  statusElement.style.border =
+    "1px solid #d0d0d0";
+
+  statusElement.style.padding =
+    "10px";
+
+  statusElement.style.borderRadius =
+    "4px";
+}
 
 
 // ==========================================================
@@ -184,8 +318,18 @@ export async function run() {
     }
 
 
+    // Clear previous status
+
     statusElement.textContent =
-      "Getting email details...";
+      "";
+
+    statusElement.style.display =
+      "none";
+
+
+    showInfo(
+      "Getting email details..."
+    );
 
 
     // ======================================================
@@ -311,8 +455,9 @@ export async function run() {
 
     if (!category) {
 
-      statusElement.textContent =
-        "Please select a category.";
+      showError(
+        "Please select a category."
+      );
 
       return;
     }
@@ -324,8 +469,9 @@ export async function run() {
 
     if (!priority) {
 
-      statusElement.textContent =
-        "Please select a priority.";
+      showError(
+        "Please select a priority."
+      );
 
       return;
     }
@@ -353,8 +499,9 @@ export async function run() {
       !dueDate
     ) {
 
-      statusElement.textContent =
-        "Please select a due date.";
+      showError(
+        "Please select a due date."
+      );
 
       return;
     }
@@ -374,8 +521,9 @@ export async function run() {
 
       if (!conversationId) {
 
-        statusElement.textContent =
-          "Unable to get email conversation ID.";
+        showError(
+          "Unable to get email conversation ID."
+        );
 
         console.error(
           "Conversation ID is empty."
@@ -391,8 +539,9 @@ export async function run() {
 
       if (!respondFrom) {
 
-        statusElement.textContent =
-          "Please enter Respond From.";
+        showError(
+          "Please enter Respond From."
+        );
 
         return;
       }
@@ -408,8 +557,9 @@ export async function run() {
 
       if (!emailRegex.test(respondFrom)) {
 
-        statusElement.textContent =
-          "Please enter a valid email address.";
+        showError(
+          "Please enter a valid email address."
+        );
 
         return;
       }
@@ -421,8 +571,9 @@ export async function run() {
 
       if (!days) {
 
-        statusElement.textContent =
-          "Please enter number of days.";
+        showError(
+          "Please enter number of days."
+        );
 
         return;
       }
@@ -434,8 +585,9 @@ export async function run() {
 
       if (Number(days) <= 0) {
 
-        statusElement.textContent =
-          "Days must be greater than 0.";
+        showError(
+          "Days must be greater than 0."
+        );
 
         return;
       }
@@ -451,8 +603,9 @@ export async function run() {
         )
       ) {
 
-        statusElement.textContent =
-          "Please enter a valid number of days.";
+        showError(
+          "Please enter a valid number of days."
+        );
 
         return;
       }
@@ -463,10 +616,31 @@ export async function run() {
     // INSTRUCTIONS VALIDATION
     // ======================================================
 
-    if (!instructions) {
+    /*
+     * Required ONLY for:
+     *
+     * - Tim's To-Dos
+     * - Rachel's To-Dos
+     *
+     * Optional for:
+     *
+     * - Tim — Please Read
+     * - Waiting on Others
+     */
 
-      statusElement.textContent =
-        "Please enter additional instructions.";
+    var isTaskCategory =
+      category === "Tim's To-Dos" ||
+      category === "Rachel's To-Dos";
+
+
+    if (
+      isTaskCategory &&
+      !instructions
+    ) {
+
+      showError(
+        "Please enter Additional Instructions."
+      );
 
       return;
     }
@@ -535,8 +709,9 @@ export async function run() {
     // GET EMAIL BODY
     // ======================================================
 
-    statusElement.textContent =
-      "Getting email body...";
+    showInfo(
+      "Getting email body..."
+    );
 
 
     item.body.getAsync(
@@ -554,8 +729,9 @@ export async function run() {
             Office.AsyncResultStatus.Succeeded
           ) {
 
-            statusElement.textContent =
-              "Unable to get email body.";
+            showError(
+              "Unable to get email body."
+            );
 
             console.error(
               "Email body error:",
@@ -602,8 +778,9 @@ export async function run() {
           // SEND DATA TO POWER AUTOMATE
           // ==================================================
 
-          statusElement.textContent =
-            "Sending to Power Automate...";
+          showInfo(
+            "Sending to Power Automate..."
+          );
 
 
           var response =
@@ -712,6 +889,7 @@ export async function run() {
                   "Power Automate response:",
                   errorText
                 );
+
               }
 
             } catch (readError) {
@@ -733,8 +911,9 @@ export async function run() {
           // SUCCESS
           // ==================================================
 
-          statusElement.textContent =
-            "Successfully sent to Power Automate.";
+          showSuccess(
+            "Successfully sent to Power Automate."
+          );
 
 
           console.log(
@@ -820,6 +999,11 @@ export async function run() {
               "waitingFields"
             );
 
+          var instructionsRequiredStar =
+            document.getElementById(
+              "instructionsRequiredStar"
+            );
+
 
           if (dueDateContainer) {
 
@@ -831,6 +1015,13 @@ export async function run() {
           if (waitingFields) {
 
             waitingFields.style.display =
+              "none";
+          }
+
+
+          if (instructionsRequiredStar) {
+
+            instructionsRequiredStar.style.display =
               "none";
           }
 
@@ -853,9 +1044,10 @@ export async function run() {
               : String(error);
 
 
-          statusElement.textContent =
+          showError(
             "Power Automate error: " +
-            errorMessage;
+            errorMessage
+          );
         }
       }
     );
@@ -879,11 +1071,9 @@ export async function run() {
         : String(error);
 
 
-    if (statusElement) {
-
-      statusElement.textContent =
-        "Error: " +
-        errorMessage;
-    }
+    showError(
+      "Error: " +
+      errorMessage
+    );
   }
 }

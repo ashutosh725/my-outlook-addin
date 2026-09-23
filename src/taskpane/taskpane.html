@@ -68,7 +68,7 @@
                 margin-bottom: 6px;
             "
         >
-            Category
+            Category <span style="color: red;">*</span>
         </label>
 
         <select
@@ -105,7 +105,7 @@
                 margin-bottom: 6px;
             "
         >
-            Priority
+            Priority <span style="color: red;">*</span>
         </label>
 
         <select
@@ -143,7 +143,7 @@
                     margin-bottom: 6px;
                 "
             >
-                Due Date
+                Due Date <span style="color: red;">*</span>
             </label>
 
             <input
@@ -180,24 +180,24 @@
                     margin-bottom: 6px;
                 "
             >
-                Respond From
+                Respond From <span style="color: red;">*</span>
             </label>
 
             <input
-    type="email"
-    id="respondFrom"
-    name="respondFrom"
-    placeholder="Enter person's email"
-    autocomplete="email"
-    style="
-        width: 100%;
-        box-sizing: border-box;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 14px;
-    "
-/>
+                type="email"
+                id="respondFrom"
+                name="respondFrom"
+                placeholder="Enter person's email"
+                autocomplete="email"
+                style="
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    font-size: 14px;
+                "
+            />
 
 
             <!-- Days -->
@@ -211,7 +211,7 @@
                     margin-bottom: 6px;
                 "
             >
-                Days
+                Days <span style="color: red;">*</span>
             </label>
 
             <input
@@ -248,6 +248,7 @@
             "
         >
             Additional Instructions
+            <span id="instructionsRequiredStar" style="color: red; display: none;">*</span>
         </label>
 
         <textarea
@@ -266,6 +267,23 @@
                 resize: vertical;
             "
         ></textarea>
+
+
+        <!-- ==========================================
+             STATUS
+        =========================================== -->
+
+        <div
+            id="status"
+            style="
+                display: none;
+                margin-top: 15px;
+                padding: 10px;
+                border-radius: 4px;
+                font-size: 14px;
+                font-weight: 600;
+            "
+        ></div>
 
 
         <!-- ==========================================
@@ -289,20 +307,6 @@
         >
             Process & Create Task
         </button>
-
-
-        <!-- ==========================================
-             STATUS
-        =========================================== -->
-
-        <div
-            id="status"
-            style="
-                margin-top: 15px;
-                font-size: 14px;
-                color: red;
-            "
-        ></div>
 
     </div>
 
