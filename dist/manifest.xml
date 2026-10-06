@@ -7,9 +7,13 @@
   xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
   xsi:type="MailApp">
 
+  <!-- ========================================================= -->
+  <!-- BASIC APP INFORMATION                                     -->
+  <!-- ========================================================= -->
+
   <Id>09fa4124-3eaf-4107-be2a-cadf092d34d6</Id>
 
-  <Version>1.0.0.13</Version>
+  <Version>1.0.0.14</Version>
 
   <ProviderName>Contoso</ProviderName>
 
@@ -17,7 +21,8 @@
 
   <DisplayName DefaultValue="Process Emails"/>
 
-  <Description DefaultValue="Process emails and send them to Power Automate."/>
+  <Description
+    DefaultValue="Process emails and send them to Power Automate."/>
 
   <IconUrl
     DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
@@ -28,21 +33,51 @@
   <SupportUrl
     DefaultValue="https://my-outlook-addin-snowy.vercel.app"/>
 
+
+  <!-- ========================================================= -->
+  <!-- APP DOMAIN                                                 -->
+  <!-- ========================================================= -->
+
   <AppDomains>
+
     <AppDomain>
       https://my-outlook-addin-snowy.vercel.app
     </AppDomain>
+
   </AppDomains>
 
+
+  <!-- ========================================================= -->
+  <!-- HOST                                                       -->
+  <!-- ========================================================= -->
+
   <Hosts>
+
     <Host Name="Mailbox"/>
+
   </Hosts>
 
+
+  <!-- ========================================================= -->
+  <!-- BASE REQUIREMENTS                                          -->
+  <!-- ========================================================= -->
+
   <Requirements>
+
     <Sets>
-      <Set Name="Mailbox" MinVersion="1.1"/>
+
+      <Set
+        Name="Mailbox"
+        MinVersion="1.1"/>
+
     </Sets>
+
   </Requirements>
+
+
+  <!-- ========================================================= -->
+  <!-- LEGACY / FALLBACK FORM SETTINGS                            -->
+  <!-- ========================================================= -->
 
   <FormSettings>
 
@@ -61,9 +96,24 @@
 
   </FormSettings>
 
-  <Permissions>ReadWriteItem</Permissions>
 
-  <Rule xsi:type="RuleCollection" Mode="Or">
+  <!-- ========================================================= -->
+  <!-- PERMISSIONS                                                -->
+  <!-- ========================================================= -->
+
+  <Permissions>
+    ReadWriteItem
+  </Permissions>
+
+
+  <!-- ========================================================= -->
+  <!-- ACTIVATION RULE                                            -->
+  <!-- Runs when a message is opened/read                         -->
+  <!-- ========================================================= -->
+
+  <Rule
+    xsi:type="RuleCollection"
+    Mode="Or">
 
     <Rule
       xsi:type="ItemIs"
@@ -72,7 +122,16 @@
 
   </Rule>
 
-  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <DisableEntityHighlighting>
+    false
+  </DisableEntityHighlighting>
+
+
+  <!-- ========================================================= -->
+  <!-- VERSION OVERRIDES V1.0                                     -->
+  <!-- Desktop / Web / New Outlook / Classic Outlook              -->
+  <!-- ========================================================= -->
 
   <VersionOverrides
     xmlns="http://schemas.microsoft.com/office/mailappversionoverrides"
@@ -88,23 +147,29 @@
 
     </Requirements>
 
+
     <Hosts>
 
       <Host xsi:type="MailHost">
 
+
+        <!-- =================================================== -->
+        <!-- DESKTOP FORM FACTOR                                 -->
+        <!-- =================================================== -->
+
         <DesktopFormFactor>
 
-          <!-- Ribbon command -->
-          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+          <ExtensionPoint
+            xsi:type="MessageReadCommandSurface">
 
             <OfficeTab id="TabDefault">
 
-              <!-- Only one group -->
               <Group id="MyOutlookAddInGroup">
 
                 <Label resid="GroupLabel"/>
 
-                <!-- Only one button -->
+
+                <!-- Desktop button -->
                 <Control
                   xsi:type="Button"
                   id="ProcessEmailButton">
@@ -118,6 +183,7 @@
                     <Description resid="ProcessEmail.Tooltip"/>
 
                   </Supertip>
+
 
                   <Icon>
 
@@ -135,9 +201,11 @@
 
                   </Icon>
 
+
                   <Action xsi:type="ShowTaskpane">
 
-                    <SourceLocation resid="Taskpane.Url"/>
+                    <SourceLocation
+                      resid="Taskpane.Url"/>
 
                   </Action>
 
@@ -155,9 +223,13 @@
 
     </Hosts>
 
+
+    <!-- ======================================================= -->
+    <!-- RESOURCES - VERSION OVERRIDES V1.0                      -->
+    <!-- ======================================================= -->
+
     <Resources>
 
-      <!-- Icons -->
       <bt:Images>
 
         <bt:Image
@@ -174,7 +246,7 @@
 
       </bt:Images>
 
-      <!-- URLs -->
+
       <bt:Urls>
 
         <bt:Url
@@ -183,7 +255,7 @@
 
       </bt:Urls>
 
-      <!-- Short strings -->
+
       <bt:ShortStrings>
 
         <bt:String
@@ -196,7 +268,7 @@
 
       </bt:ShortStrings>
 
-      <!-- Long strings -->
+
       <bt:LongStrings>
 
         <bt:String
@@ -206,6 +278,296 @@
       </bt:LongStrings>
 
     </Resources>
+
+
+    <!-- ========================================================= -->
+    <!-- VERSION OVERRIDES V1.1                                    -->
+    <!-- Required for Outlook Mobile                              -->
+    <!-- ========================================================= -->
+
+    <VersionOverrides
+      xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
+      xsi:type="VersionOverridesV1_1">
+
+
+      <!-- ======================================================= -->
+      <!-- REQUIREMENTS                                             -->
+      <!-- ======================================================= -->
+
+      <Requirements>
+
+        <bt:Sets DefaultMinVersion="1.3">
+
+          <bt:Set Name="Mailbox"/>
+
+        </bt:Sets>
+
+      </Requirements>
+
+
+      <!-- ======================================================= -->
+      <!-- HOSTS                                                    -->
+      <!-- ======================================================= -->
+
+      <Hosts>
+
+        <Host xsi:type="MailHost">
+
+
+          <!-- =================================================== -->
+          <!-- DESKTOP / WEB / NEW OUTLOOK                         -->
+          <!-- =================================================== -->
+
+          <DesktopFormFactor>
+
+            <ExtensionPoint
+              xsi:type="MessageReadCommandSurface">
+
+              <OfficeTab id="TabDefault">
+
+                <Group id="MyOutlookAddInGroupV11">
+
+                  <Label resid="GroupLabel"/>
+
+                  <Control
+                    xsi:type="Button"
+                    id="ProcessEmailButtonV11">
+
+                    <Label resid="ProcessEmail.Label"/>
+
+                    <Supertip>
+
+                      <Title resid="ProcessEmail.Label"/>
+
+                      <Description resid="ProcessEmail.Tooltip"/>
+
+                    </Supertip>
+
+
+                    <Icon>
+
+                      <bt:Image
+                        size="16"
+                        resid="Icon.16x16"/>
+
+                      <bt:Image
+                        size="32"
+                        resid="Icon.32x32"/>
+
+                      <bt:Image
+                        size="80"
+                        resid="Icon.80x80"/>
+
+                    </Icon>
+
+
+                    <Action xsi:type="ShowTaskpane">
+
+                      <SourceLocation
+                        resid="Taskpane.Url"/>
+
+                    </Action>
+
+                  </Control>
+
+                </Group>
+
+              </OfficeTab>
+
+            </ExtensionPoint>
+
+          </DesktopFormFactor>
+
+
+          <!-- ================================================= -->
+          <!-- OUTLOOK MOBILE                                     -->
+          <!-- Android + iOS                                     -->
+          <!-- ================================================= -->
+
+          <MobileFormFactor>
+
+            <ExtensionPoint
+              xsi:type="MobileMessageReadCommandSurface">
+
+              <Group id="MobileEmailActionsGroup">
+
+                <Label resid="GroupLabel"/>
+
+
+                <!-- Mobile Process Email button -->
+                <Control
+                  xsi:type="MobileButton"
+                  id="MobileProcessEmailButton">
+
+                  <Label resid="ProcessEmail.Label"/>
+
+
+                  <!-- Mobile icons -->
+                  <Icon xsi:type="bt:MobileIconList">
+
+                    <!-- 25x25 -->
+                    <bt:Image
+                      size="25"
+                      scale="1"
+                      resid="Icon.25x25"/>
+
+                    <bt:Image
+                      size="25"
+                      scale="2"
+                      resid="Icon.25x25"/>
+
+                    <bt:Image
+                      size="25"
+                      scale="3"
+                      resid="Icon.25x25"/>
+
+
+                    <!-- 32x32 -->
+                    <bt:Image
+                      size="32"
+                      scale="1"
+                      resid="Icon.32x32Mobile"/>
+
+                    <bt:Image
+                      size="32"
+                      scale="2"
+                      resid="Icon.32x32Mobile"/>
+
+                    <bt:Image
+                      size="32"
+                      scale="3"
+                      resid="Icon.32x32Mobile"/>
+
+
+                    <!-- 48x48 -->
+                    <bt:Image
+                      size="48"
+                      scale="1"
+                      resid="Icon.48x48"/>
+
+                    <bt:Image
+                      size="48"
+                      scale="2"
+                      resid="Icon.48x48"/>
+
+                    <bt:Image
+                      size="48"
+                      scale="3"
+                      resid="Icon.48x48"/>
+
+                  </Icon>
+
+
+                  <!-- Open task pane -->
+                  <Action xsi:type="ShowTaskpane">
+
+                    <SourceLocation
+                      resid="Taskpane.Url"/>
+
+                  </Action>
+
+                </Control>
+
+              </Group>
+
+            </ExtensionPoint>
+
+          </MobileFormFactor>
+
+        </Host>
+
+      </Hosts>
+
+
+      <!-- ======================================================= -->
+      <!-- RESOURCES - VERSION OVERRIDES V1.1                      -->
+      <!-- ======================================================= -->
+
+      <Resources>
+
+
+        <!-- ===================================================== -->
+        <!-- DESKTOP + MOBILE ICONS                                -->
+        <!-- ===================================================== -->
+
+        <bt:Images>
+
+
+          <!-- Desktop icons -->
+          <bt:Image
+            id="Icon.16x16"
+            DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
+
+          <bt:Image
+            id="Icon.32x32"
+            DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
+
+          <bt:Image
+            id="Icon.80x80"
+            DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
+
+
+          <!-- Mobile icons -->
+          <bt:Image
+            id="Icon.25x25"
+            DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
+
+          <bt:Image
+            id="Icon.32x32Mobile"
+            DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
+
+          <bt:Image
+            id="Icon.48x48"
+            DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
+
+        </bt:Images>
+
+
+        <!-- ===================================================== -->
+        <!-- URLS                                                   -->
+        <!-- ===================================================== -->
+
+        <bt:Urls>
+
+          <bt:Url
+            id="Taskpane.Url"
+            DefaultValue="https://my-outlook-addin-snowy.vercel.app/taskpane.html"/>
+
+        </bt:Urls>
+
+
+        <!-- ===================================================== -->
+        <!-- SHORT STRINGS                                          -->
+        <!-- ===================================================== -->
+
+        <bt:ShortStrings>
+
+          <bt:String
+            id="GroupLabel"
+            DefaultValue="Email Actions"/>
+
+          <bt:String
+            id="ProcessEmail.Label"
+            DefaultValue="Process Email"/>
+
+        </bt:ShortStrings>
+
+
+        <!-- ===================================================== -->
+        <!-- LONG STRINGS                                           -->
+        <!-- ===================================================== -->
+
+        <bt:LongStrings>
+
+          <bt:String
+            id="ProcessEmail.Tooltip"
+            DefaultValue="Open the email processing task pane."/>
+
+        </bt:LongStrings>
+
+      </Resources>
+
+    </VersionOverrides>
 
   </VersionOverrides>
 
