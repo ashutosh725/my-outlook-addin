@@ -4,16 +4,11 @@
   xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
-  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
   xsi:type="MailApp">
-
-  <!-- ========================================================= -->
-  <!-- BASIC APP INFORMATION                                     -->
-  <!-- ========================================================= -->
 
   <Id>09fa4124-3eaf-4107-be2a-cadf092d34d6</Id>
 
-  <Version>1.0.0.14</Version>
+  <Version>1.0.0.15</Version>
 
   <ProviderName>Contoso</ProviderName>
 
@@ -33,11 +28,6 @@
   <SupportUrl
     DefaultValue="https://my-outlook-addin-snowy.vercel.app"/>
 
-
-  <!-- ========================================================= -->
-  <!-- APP DOMAIN                                                 -->
-  <!-- ========================================================= -->
-
   <AppDomains>
 
     <AppDomain>
@@ -46,21 +36,11 @@
 
   </AppDomains>
 
-
-  <!-- ========================================================= -->
-  <!-- HOST                                                       -->
-  <!-- ========================================================= -->
-
   <Hosts>
 
     <Host Name="Mailbox"/>
 
   </Hosts>
-
-
-  <!-- ========================================================= -->
-  <!-- BASE REQUIREMENTS                                          -->
-  <!-- ========================================================= -->
 
   <Requirements>
 
@@ -73,11 +53,6 @@
     </Sets>
 
   </Requirements>
-
-
-  <!-- ========================================================= -->
-  <!-- LEGACY / FALLBACK FORM SETTINGS                            -->
-  <!-- ========================================================= -->
 
   <FormSettings>
 
@@ -96,20 +71,7 @@
 
   </FormSettings>
 
-
-  <!-- ========================================================= -->
-  <!-- PERMISSIONS                                                -->
-  <!-- ========================================================= -->
-
-  <Permissions>
-    ReadWriteItem
-  </Permissions>
-
-
-  <!-- ========================================================= -->
-  <!-- ACTIVATION RULE                                            -->
-  <!-- Runs when a message is opened/read                         -->
-  <!-- ========================================================= -->
+  <Permissions>ReadWriteItem</Permissions>
 
   <Rule
     xsi:type="RuleCollection"
@@ -122,15 +84,11 @@
 
   </Rule>
 
-
-  <DisableEntityHighlighting>
-    false
-  </DisableEntityHighlighting>
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
 
 
   <!-- ========================================================= -->
-  <!-- VERSION OVERRIDES V1.0                                     -->
-  <!-- Desktop / Web / New Outlook / Classic Outlook              -->
+  <!-- VERSION OVERRIDES 1.0                                     -->
   <!-- ========================================================= -->
 
   <VersionOverrides
@@ -152,11 +110,6 @@
 
       <Host xsi:type="MailHost">
 
-
-        <!-- =================================================== -->
-        <!-- DESKTOP FORM FACTOR                                 -->
-        <!-- =================================================== -->
-
         <DesktopFormFactor>
 
           <ExtensionPoint
@@ -168,8 +121,6 @@
 
                 <Label resid="GroupLabel"/>
 
-
-                <!-- Desktop button -->
                 <Control
                   xsi:type="Button"
                   id="ProcessEmailButton">
@@ -183,7 +134,6 @@
                     <Description resid="ProcessEmail.Tooltip"/>
 
                   </Supertip>
-
 
                   <Icon>
 
@@ -200,7 +150,6 @@
                       resid="Icon.80x80"/>
 
                   </Icon>
-
 
                   <Action xsi:type="ShowTaskpane">
 
@@ -223,10 +172,6 @@
 
     </Hosts>
 
-
-    <!-- ======================================================= -->
-    <!-- RESOURCES - VERSION OVERRIDES V1.0                      -->
-    <!-- ======================================================= -->
 
     <Resources>
 
@@ -281,22 +226,17 @@
 
 
     <!-- ========================================================= -->
-    <!-- VERSION OVERRIDES V1.1                                    -->
-    <!-- Required for Outlook Mobile                              -->
+    <!-- VERSION OVERRIDES 1.1                                    -->
+    <!-- MOBILE SUPPORT                                           -->
     <!-- ========================================================= -->
 
     <VersionOverrides
       xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1"
       xsi:type="VersionOverridesV1_1">
 
-
-      <!-- ======================================================= -->
-      <!-- REQUIREMENTS                                             -->
-      <!-- ======================================================= -->
-
       <Requirements>
 
-        <bt:Sets DefaultMinVersion="1.3">
+        <bt:Sets DefaultMinVersion="1.5">
 
           <bt:Set Name="Mailbox"/>
 
@@ -305,18 +245,14 @@
       </Requirements>
 
 
-      <!-- ======================================================= -->
-      <!-- HOSTS                                                    -->
-      <!-- ======================================================= -->
-
       <Hosts>
 
         <Host xsi:type="MailHost">
 
 
-          <!-- =================================================== -->
-          <!-- DESKTOP / WEB / NEW OUTLOOK                         -->
-          <!-- =================================================== -->
+          <!-- ================================================= -->
+          <!-- DESKTOP / WEB / NEW OUTLOOK                       -->
+          <!-- ================================================= -->
 
           <DesktopFormFactor>
 
@@ -343,7 +279,6 @@
 
                     </Supertip>
 
-
                     <Icon>
 
                       <bt:Image
@@ -359,7 +294,6 @@
                         resid="Icon.80x80"/>
 
                     </Icon>
-
 
                     <Action xsi:type="ShowTaskpane">
 
@@ -381,7 +315,6 @@
 
           <!-- ================================================= -->
           <!-- OUTLOOK MOBILE                                     -->
-          <!-- Android + iOS                                     -->
           <!-- ================================================= -->
 
           <MobileFormFactor>
@@ -393,19 +326,15 @@
 
                 <Label resid="GroupLabel"/>
 
-
-                <!-- Mobile Process Email button -->
                 <Control
                   xsi:type="MobileButton"
                   id="MobileProcessEmailButton">
 
                   <Label resid="ProcessEmail.Label"/>
 
-
-                  <!-- Mobile icons -->
                   <Icon xsi:type="bt:MobileIconList">
 
-                    <!-- 25x25 -->
+                    <!-- 25px -->
                     <bt:Image
                       size="25"
                       scale="1"
@@ -422,7 +351,7 @@
                       resid="Icon.25x25"/>
 
 
-                    <!-- 32x32 -->
+                    <!-- 32px -->
                     <bt:Image
                       size="32"
                       scale="1"
@@ -439,7 +368,7 @@
                       resid="Icon.32x32Mobile"/>
 
 
-                    <!-- 48x48 -->
+                    <!-- 48px -->
                     <bt:Image
                       size="48"
                       scale="1"
@@ -457,8 +386,6 @@
 
                   </Icon>
 
-
-                  <!-- Open task pane -->
                   <Action xsi:type="ShowTaskpane">
 
                     <SourceLocation
@@ -479,21 +406,15 @@
       </Hosts>
 
 
-      <!-- ======================================================= -->
-      <!-- RESOURCES - VERSION OVERRIDES V1.1                      -->
-      <!-- ======================================================= -->
+      <!-- ========================================================= -->
+      <!-- RESOURCES                                                 -->
+      <!-- ========================================================= -->
 
       <Resources>
 
-
-        <!-- ===================================================== -->
-        <!-- DESKTOP + MOBILE ICONS                                -->
-        <!-- ===================================================== -->
-
         <bt:Images>
 
-
-          <!-- Desktop icons -->
+          <!-- Desktop -->
           <bt:Image
             id="Icon.16x16"
             DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
@@ -507,7 +428,7 @@
             DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
 
 
-          <!-- Mobile icons -->
+          <!-- Mobile -->
           <bt:Image
             id="Icon.25x25"
             DefaultValue="https://my-outlook-addin-snowy.vercel.app/assets/EmailIcon.png"/>
@@ -523,10 +444,6 @@
         </bt:Images>
 
 
-        <!-- ===================================================== -->
-        <!-- URLS                                                   -->
-        <!-- ===================================================== -->
-
         <bt:Urls>
 
           <bt:Url
@@ -535,10 +452,6 @@
 
         </bt:Urls>
 
-
-        <!-- ===================================================== -->
-        <!-- SHORT STRINGS                                          -->
-        <!-- ===================================================== -->
 
         <bt:ShortStrings>
 
@@ -552,10 +465,6 @@
 
         </bt:ShortStrings>
 
-
-        <!-- ===================================================== -->
-        <!-- LONG STRINGS                                           -->
-        <!-- ===================================================== -->
 
         <bt:LongStrings>
 
